@@ -1,0 +1,7 @@
+package com.dearbear.exceptionStudy;
+
+public class ExceptionInfo {
+	public static void main(String args[]) {
+		
+	}
+}

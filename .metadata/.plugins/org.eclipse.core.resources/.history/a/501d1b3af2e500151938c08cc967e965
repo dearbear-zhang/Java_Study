@@ -1,0 +1,6 @@
+
+public class CHello {
+	static public void main(String src[]) {
+		System.out.println("hello");
+	}
+}

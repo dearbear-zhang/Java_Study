@@ -1,0 +1,15 @@
+package com.dearbear.exceptionStudy;
+
+public class ExceptionInfo {
+	try {
+		int x = Integer.parseInt("22L");
+		System.out.println(x);
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+//		e.getMessage();
+	}
+	finally{
+		System.out.println("Programe Over");
+	}
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.dearbear.classStudy.Shap"/>
+<fullyQualifiedTypeName name="java.awt.print.PrinterIOException"/>
+<fullyQualifiedTypeName name="java.nio.channels.Pipe"/>
+<fullyQualifiedTypeName name="com.dearbear.classStudy.CClassInfoStudy"/>
+<fullyQualifiedTypeName name="com.dearbear.classStudy.OutClass.ClassInner"/>
+<fullyQualifiedTypeName name="com.dearbear.classStudy.OutInterfac"/>
+<fullyQualifiedTypeName name="com.dearbear.classStudy.CClassInfoStudy.InClass"/>
+<fullyQualifiedTypeName name="com.dearbear.classStudy.OutClass"/>
+<fullyQualifiedTypeName name="javax.swing.plaf.metal.MetalBorders.Flush3DBorder"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="com.dearbear.exceptionStudy.ExceptionInfo"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="com.dearbear.exceptionStudy.MyException"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
+<fullyQualifiedTypeName name="java.util.Collection"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="com.dearbear.collectionInfo.CCollectionInfo"/>
+<fullyQualifiedTypeName name="java.lang.Comparable"/>
+<fullyQualifiedTypeName name="org.omg.CORBA.OBJECT_NOT_EXIST"/>
+<fullyQualifiedTypeName name="java.io.PushbackInputStream"/>
+<fullyQualifiedTypeName name="java.lang.instrument.UnmodifiableClassException"/>
+<fullyQualifiedTypeName name="org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.TreeSet"/>
+<fullyQualifiedTypeName name="javax.jws.soap.SOAPBinding.Style"/>
+<fullyQualifiedTypeName name="java.nio.channels.UnsupportedAddressTypeException"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.TreeMap"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="java.lang.NegativeArraySizeException"/>
+<fullyQualifiedTypeName name="org.omg.CORBA.SystemException"/>
+<fullyQualifiedTypeName name="javax.security.auth.kerberos.KeyTab"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.lang.Object"/>
+<fullyQualifiedTypeName name="java.lang.Override"/>
+<fullyQualifiedTypeName name="javax.swing.plaf.basic.BasicGraphicsUtils"/>
+<fullyQualifiedTypeName name="java.lang.Thread"/>
+<fullyQualifiedTypeName name="com.dearbear.collectionInfo.UpdataStu"/>
+</qualifiedTypeNameHistroy>
