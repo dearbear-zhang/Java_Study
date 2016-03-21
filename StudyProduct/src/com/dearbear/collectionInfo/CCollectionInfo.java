@@ -108,3 +108,4 @@ class UpdataStu implements Comparable<Object>{
 		return this.m_name.hashCode() * 37 + (int)this.m_id;
 	}
 }
+
