@@ -21,7 +21,7 @@ class Singleton2{
 	private Singleton2(){
 	}
 	
-	public static synchronized Singleton2 newInstance(){
+	public static Singleton2 newInstance(){
 		if (mSingleton == null) {			
 			synchronized(Singleton2.class){
 				if (mSingleton == null) {
