@@ -4,7 +4,7 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 
 public class MainAcitivity {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Observable.just("1", "2", "3")
                 .subscribe(new Consumer<String>() {
                     @Override
@@ -12,5 +12,6 @@ public class MainAcitivity {
                         System.out.println(s + ": helloword");
                     }
                 });
+
     }
 }
