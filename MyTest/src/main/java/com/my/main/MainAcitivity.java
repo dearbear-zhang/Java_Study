@@ -1,8 +1,9 @@
 package com.my.main;
 
-import com.my.xml.XmlTest;
-import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
+import com.my.DataFormatTest;
+import com.my.gson.GsonTest;
+
+import java.text.SimpleDateFormat;
 
 public class MainAcitivity {
     public static void main(String[] args) {
@@ -13,7 +14,9 @@ public class MainAcitivity {
 //                        System.out.println(s + ": helloword");
 //                    }
 //                });
-        XmlTest.main();
+//        XmlTest.main();
+//        GsonTest.main();
+        DataFormatTest.main();
 
     }
 }
