@@ -1,6 +1,7 @@
 package com.my.xml;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamAliasType;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 import java.util.List;
@@ -13,10 +14,8 @@ public class PersionBean {
     private String sex;
     @XStreamAlias("age")
     private int age;
-    @XStreamImplicit(itemFieldName = "books")
-    private List<String> books;
-    private Set<String> lovers;
-
+    @XStreamAlias("friend")
+    private Friend friend;
     public String getName() {
         return name;
     }
@@ -41,19 +40,34 @@ public class PersionBean {
         this.sex = sex;
     }
 
-    public List<String> getBooks() {
-        return books;
+    public Friend getFriend() {
+        return friend;
     }
 
-    public void setBooks(List<String> books) {
-        this.books = books;
+    public void setFriend(Friend friend) {
+        this.friend = friend;
     }
 
-    public Set<String> getLovers() {
-        return lovers;
-    }
+    public static class Friend{
+        @XStreamImplicit(itemFieldName = "books")
+        private List<String> books;
+        @XStreamImplicit(itemFieldName = "lovers")
+        private Set<String> lovers;
 
-    public void setLovers(Set<String> lovers) {
-        this.lovers = lovers;
+        public List<String> getBooks() {
+            return books;
+        }
+
+        public void setBooks(List<String> books) {
+            this.books = books;
+        }
+
+        public Set<String> getLovers() {
+            return lovers;
+        }
+
+        public void setLovers(Set<String> lovers) {
+            this.lovers = lovers;
+        }
     }
 }

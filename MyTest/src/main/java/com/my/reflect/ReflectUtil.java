@@ -6,7 +6,6 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 import java.lang.reflect.Field;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ReflectUtil {
