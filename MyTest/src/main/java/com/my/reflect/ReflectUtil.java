@@ -37,7 +37,7 @@ public class ReflectUtil {
                 continue;
             }
             // 基本类型,String类型和List类型,to对应字段为null,直接判断为非null则赋值;变量为类对象且都不为null则迭代调用本函数
-            if (fieldClass.isPrimitive() || fieldClass == String.class || fieldClass == List.class || toValue == null) {
+            if (fieldClass.isPrimitive() || fieldClass == String.class || fieldClass.isArray() || toValue == null) {
                 try {
                     field.set(to, fromValue);
                 } catch (IllegalAccessException e) {
