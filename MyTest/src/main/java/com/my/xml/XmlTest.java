@@ -1,41 +1,82 @@
 package com.my.xml;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.my.xml.project.DC_4205;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class XmlTest {
-    public static  void main(){
-        FeatureBean formatBean = new FeatureBean();
-        formatBean.setRoot("feature_info");
-        FeatureBean.WidgetInfoBean widgetInfoBean = new FeatureBean.WidgetInfoBean();
-        List<String> attributes = new ArrayList<>();
-        attributes.add("primary,logo_dc4205");
-        attributes.add("secondary,logo_dc4210");
-        widgetInfoBean.setAttribute(attributes);
-        FeatureBean.WidgetFunctionModuleBean widgetFunctionModuleBean = new FeatureBean.WidgetFunctionModuleBean();
-        List<FeatureBean.WidgetFunctionModuleBean.AttributeBean> attributeBeans = new ArrayList<>();
-        FeatureBean.WidgetFunctionModuleBean.AttributeBean attributeBean = new FeatureBean.WidgetFunctionModuleBean.AttributeBean();
-        attributeBean.setName("primary");
-        attributeBean.setContent("1001,phone_collection,datacollector_selector,UCS,standard");
-        FeatureBean.WidgetFunctionModuleBean.AttributeBean attributeBean1 = new FeatureBean.WidgetFunctionModuleBean.AttributeBean();
-        attributeBean1.setName("primary");
-        attributeBean1.setContent("1002,wifi_scanning_mode,wireless_scanning_selector,WCS,wcsModeSelect");
+    public static void main(String[] args) {
+//        FeatureBean formatBean = AS_2000.getFeatureBean();
+//        FeatureBean formatBean = DC_4201.getFeatureBean();
+//        FeatureBean formatBean = DC_4202.getFeatureBean();
+//        FeatureBean formatBean = DC_4205_NOT_IDC.getFeatureBean();
+        FeatureBean formatBean = DC_4205.getFeatureBean();
+//        FeatureBean formatBean = DC_4205G_Develop.getFeatureBean();
+//        FeatureBean formatBean = DC_4205G.getFeatureBean();
+//        FeatureBean formatBean = DC_4205M.getFeatureBean();
+//        FeatureBean formatBean = DC_4205S.getFeatureBean();
+//        FeatureBean formatBean = DC_4210_RK29.getFeatureBean();
+//        FeatureBean formatBean = DC_4210.getFeatureBean();
+//        FeatureBean formatBean = NDC_4201.getFeatureBean();
+//        FeatureBean formatBean = XDH_1800A.getFeatureBean();
+//        FeatureBean formatBean = XDH_1810A.getFeatureBean();
+//        FeatureBean formatBean = XDH_1900A_NOT_IDC.getFeatureBean();
+//        FeatureBean formatBean = XDH_1900A.getFeatureBean();
+//        FeatureBean formatBean = XDH_1900B.getFeatureBean();
 
-        attributeBeans.add(attributeBean);
-        attributeBeans.add(attributeBean1);
-        widgetFunctionModuleBean.setAttribute(attributeBeans);
-
-        formatBean.setWidget_function_module(widgetFunctionModuleBean);
-
-        XStream xstream = new XStream(new DomDriver());
-        xstream.ignoreUnknownElements();
-        xstream.processAnnotations(FeatureBean.class);
-
+        List<FeatureBean> datas = new ArrayList<FeatureBean>();
+        datas.add(formatBean);
         //XML序列化
-        String xml = xstream.toXML(formatBean);
+        String xml = XmlConvertUtil.toXml(formatBean, FeatureBean.class);
         System.out.println(xml);
+        // 写入xml文件
+//        String xmlFileName = "/xml/AS-2000.xml";
+//        String xmlFileName = "/xml/DC-4201.xml";
+//        String xmlFileName = "/xml/DC-4202.xml";
+//        String xmlFileName = "/xml/DC-4205(NOT_IDC).xml";
+        String xmlFileName = "/xml/DC-4205.xml";
+//        String xmlFileName = "/xml/DC-4205G(Develop).xml";
+//        String xmlFileName = "/xml/DC-4205G.xml";
+//        String xmlFileName = "/xml/DC-4205M.xml";
+//        String xmlFileName = "/xml/DC-4205S.xml";
+//        String xmlFileName = "/xml/DC-4210(RK29).xml";
+//        String xmlFileName = "/xml/DC-4210.xml";
+//        String xmlFileName = "/xml/NDC-4201.xml";
+//        String xmlFileName = "/xml/XDH-1800A.xml";
+//        String xmlFileName = "/xml/XDH-1810A.xml";
+//        String xmlFileName = "/xml/XDH-1900A(NOT_IDC).xml";
+//        String xmlFileName = "/xml/XDH-1900A.xml";
+//        String xmlFileName = "/xml/XDH-1900B.xml";
+        writeXmlFile(xmlFileName, xml);
+        FeatureBean featureBean = XmlConvertUtil.toJavaBean(xml, FeatureBean.class);
+        System.out.println(featureBean);
+        String xml2 = XmlConvertUtil.toXml(featureBean, FeatureBean.class);
+        System.out.println(xml2);
+    }
+
+    private static void writeXmlFile(String filePath, String msg) {
+        File file = new File(filePath);
+        // 父目录不存在,则创建
+        System.out.println(file.getAbsolutePath());
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+        try {
+            FileOutputStream outputStream = new FileOutputStream(file, false);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            writer.newLine();
+            writer.write(msg);
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
