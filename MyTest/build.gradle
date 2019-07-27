@@ -12,6 +12,7 @@ repositories {
 }
 
 dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     // RxJava2
     implementation 'io.reactivex.rxjava2:rxjava:2.1.17'
     // Retrofit2

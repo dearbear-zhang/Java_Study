@@ -1,8 +1,13 @@
 package com.my.main;
 
+import com.my.file.FileTest;
 import com.my.xml.PersionBean;
 import com.my.xml.XmlTest;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.text.Collator;
 import java.util.*;
 
@@ -47,6 +52,12 @@ public class MainAcitivity {
 
         Collections.sort(list, CHINA_COMPARE1);
         System.out.println(list);
-        int x = 1/0;
+        File file = new File("");
+        try {
+            FileOutputStream stream = new FileOutputStream(file);
+//            stream.getChannel().map(FileChannel.MapMode.READ_WRITE);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
