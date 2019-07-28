@@ -24,7 +24,8 @@ public class MyDecoder extends CumulativeProtocolDecoder {
                         SocketMessage msg = new SocketMessage();
                         msg.setType(type);
                         msg.setBody(body);
-                        protocolDecoderOutput.write(msg);
+                        // 解析socket数据到业务层
+                        protocolDecoderOutput.write(MessageConverUtil.socketMsgToUserMsg(msg));
                         if (ioBuffer.remaining() >= 3) {
                             //再来一遍
                             return true;

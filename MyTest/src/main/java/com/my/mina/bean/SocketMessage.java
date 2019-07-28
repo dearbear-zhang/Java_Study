@@ -8,12 +8,12 @@ public class SocketMessage implements Serializable {
     public static final byte HEADER2 = 0x74;
 
     //定义消息类型
-    public static final byte TYPE_SEND_TEXT = 0;
     public static final byte TYPE_REQUEST_SEND_FILE = 1;
     public static final byte TYPE_ACCEPT_RECEIVE_FILE = 2;
-    public static final byte TYPE_REFUSE_RECEIVE_FILE = 3;
-    public static final byte TYPE_SEND_FILE_PART = 4;
+    public static final byte TYPE_SEND_FILE_PART = 3;
+    public static final byte TYPE_RECEIVE_FILE_FINISH = 4;
     public static final byte TYPE_RECEIVE_FILE_PART = 5;
+
 
     private byte type;
     private byte[] body;

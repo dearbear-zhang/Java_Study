@@ -11,19 +11,18 @@ import java.nio.ByteOrder;
 public class MyEncoder extends ProtocolEncoderAdapter {
     @Override
     public void encode(IoSession ioSession, Object o, ProtocolEncoderOutput protocolEncoderOutput) throws Exception {
-        if (o instanceof SocketMessage) {
-            SocketMessage msg = (SocketMessage) o;
-            IoBuffer buffer = IoBuffer.allocate(100).setAutoExpand(true);
-            buffer.order(ByteOrder.BIG_ENDIAN);
-            buffer.put(SocketMessage.HEADER1);
-            buffer.put(SocketMessage.HEADER2);
-            buffer.put(msg.getType());
-            byte[] body = msg.getBody();
-            short bodyLength = (short) body.length;
-            buffer.putShort(bodyLength);
-            buffer.put(body);
-            buffer.flip();
-            protocolEncoderOutput.write(buffer);
-        }
+        // 业务层数据转socket数据
+        SocketMessage msg = MessageConverUtil.userMsgToSocketMsg(o);
+        IoBuffer buffer = IoBuffer.allocate(100).setAutoExpand(true);
+        buffer.order(ByteOrder.BIG_ENDIAN);
+        buffer.put(SocketMessage.HEADER1);
+        buffer.put(SocketMessage.HEADER2);
+        buffer.put(msg.getType());
+        byte[] body = msg.getBody();
+        short bodyLength = (short) body.length;
+        buffer.putShort(bodyLength);
+        buffer.put(body);
+        buffer.flip();
+        protocolEncoderOutput.write(buffer);
     }
 }

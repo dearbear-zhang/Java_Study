@@ -1,16 +1,17 @@
 package com.my.mina.bean;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.Serializable;
 
-public class FileTask {
-    public boolean running = true;
+public class FileTask implements Serializable {
     public long id;
     public String fileName;
     public String filePath;
     public String md5;
     public long startTime;
-    public long startTime2; //网络计时
-    public long size;
+    public long endTime;
+    public long length;
     public int fileSegmentSize;
-    public AtomicInteger partId = new AtomicInteger(0);
+    public int lastSegmentSize;
+    public int partId;
+    public int partNum;
 }
