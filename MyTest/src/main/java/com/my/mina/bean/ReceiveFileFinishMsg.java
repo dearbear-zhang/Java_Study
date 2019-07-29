@@ -3,14 +3,14 @@ package com.my.mina.bean;
 import java.io.Serializable;
 
 public class ReceiveFileFinishMsg implements Serializable {
-    private int id;
+    private long id;
     private boolean success;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

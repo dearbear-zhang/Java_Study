@@ -1,9 +1,6 @@
 package com.my.mina;
 
-import com.my.mina.bean.AcceptReceiveFileMsg;
-import com.my.mina.bean.FilePartMsg;
-import com.my.mina.bean.FileTask;
-import com.my.mina.bean.RequestSendFileMsg;
+import com.my.mina.bean.*;
 import org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder;
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.service.IoHandlerAdapter;
@@ -14,6 +11,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
+import java.io.File;
 import java.net.InetSocketAddress;
 
 public class MinaClient implements Runnable {
@@ -62,7 +60,7 @@ public class MinaClient implements Runnable {
 
         @Override
         public void sessionDestroyed(IoSession ioSession) throws Exception {
-
+            System.out.println("socket client 连接销毁:" + String.valueOf(ioSession.getId()));
         }
     };
 
@@ -73,25 +71,37 @@ public class MinaClient implements Runnable {
                 RequestSendFileMsg requestMsg = (RequestSendFileMsg) message;
                 FileTask task = new FileTask();
                 task.fileName = requestMsg.getFileName();
-                task.filePath = MinaConstans.RECEIVE_FILE_PATH + task.fileName;
+                task.filePath = MinaConstans.RECEIVE_FILE_PATH + String.valueOf((int) (1 + Math.random() * (100 - 1 + 1))) + task.fileName;
                 task.length = requestMsg.getLength();
                 task.fileSegmentSize = requestMsg.getFileSegmentSize();
                 task.md5 = requestMsg.getMd5();
+                task.partNum = requestMsg.getPartNum();
                 session.setAttribute(MinaConstans.SESSION_ATTR_FILETASK, task);
                 // 发送允许文件发送信息
                 AcceptReceiveFileMsg acceptFileMsg = new AcceptReceiveFileMsg();
                 session.write(acceptFileMsg);
                 task.startTime = System.currentTimeMillis();
-                System.out.println("文件接收开始");
+                System.out.println("文件接收开始, partNum:" + String.valueOf(task.partNum));
             } else if (message instanceof FilePartMsg) {
                 FilePartMsg filePartMsg = (FilePartMsg) message;
                 FileTask task = (FileTask) session.getAttribute(MinaConstans.SESSION_ATTR_FILETASK);
-                System.out.print(String.format("文件接收...%d/%d", filePartMsg.getPartId(), task.partNum));
+//                System.out.print(String.format("文件接收...%d/%d", filePartMsg.getPartId(), task.partNum));
                 FileUtil.randowFileWrite(task, filePartMsg);
                 if (filePartMsg.getPartId() == task.partNum) {
                     // 文件传输结束
                     task.endTime = System.currentTimeMillis();
-                    System.out.println("文件接收完毕,耗时:" + String.valueOf(task.endTime - task.startTime));
+                    ReceiveFileFinishMsg receivedMsg = new ReceiveFileFinishMsg();
+                    // 校验接收的文件的md5
+                    String fileMD5 = MD5Helper.getFileMD5(new File(task.filePath));
+                    receivedMsg.setId(session.getId());
+                    if (fileMD5.equals(task.md5)) {
+                        System.out.println("文件接收完毕,MD5校验成功,耗时:" + String.valueOf(task.endTime - task.startTime));
+                        receivedMsg.setSuccess(true);
+                    } else {
+                        System.out.println("文件接收完毕,MD5校验失败,耗时:" + String.valueOf(task.endTime - task.startTime));
+                        receivedMsg.setSuccess(false);
+                    }
+                    session.write(receivedMsg);
                 }
             }
         }

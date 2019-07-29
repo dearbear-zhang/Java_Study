@@ -10,6 +10,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
@@ -38,13 +39,12 @@ public class MinaServer implements Runnable {
         @Override
         public void messageReceived(IoSession session, Object message) throws Exception {
             FileTask task = (FileTask) session.getAttribute(MinaConstans.SESSION_ATTR_FILETASK);
-            task.startTime = System.currentTimeMillis();
             if (message instanceof AcceptReceiveFileMsg) {
                 // 发送文件分段
                 if (task != null) {
-                    System.out.println("文件发送开始");
+                    System.out.println("文件发送开始,partNum:" + task.partNum);
                     for (int partId = 0; partId <= task.partNum; partId++) {
-                        System.out.print(String.format("文件发送中...%d/%d", partId, task.partNum));
+//                        System.out.print(String.format("文件发送中...%d/%d", partId, task.partNum));
                         FilePartMsg partMessage = new FilePartMsg();
                         partMessage.setPartId(partId);
                         partMessage.setData(FileUtil.randowFileRead(task, partId));
@@ -55,7 +55,10 @@ public class MinaServer implements Runnable {
                 ReceiveFileFinishMsg receivedMsg = (ReceiveFileFinishMsg) message;
                 task.endTime = System.currentTimeMillis();
                 if (receivedMsg.isSuccess()) {
-                    System.out.println("文件发送结束,耗时:" + String.valueOf(task.endTime - task.startTime));
+                    System.out.println("文件发送结束,md5校验成功,耗时:" + String.valueOf(task.endTime - task.startTime));
+                    session.closeNow();
+                } else {
+                    System.out.println("文件发送结束,md5校验失败,耗时:" + String.valueOf(task.endTime - task.startTime));
                     session.closeNow();
                 }
             }
@@ -82,30 +85,33 @@ public class MinaServer implements Runnable {
         public void sessionCreated(IoSession ioSession) throws Exception {
             // 文件发送请求
             System.out.println("socket service 有一个连接:" + String.valueOf(ioSession.getId()));
-            String path = "C:\\WeiYun\\329330316\\Job\\MeiYaPico\\BKDemo.7z";
+            String path = "E:\\Job\\AiGlasses.zip";
             RequestSendFileMsg message = new RequestSendFileMsg();
             FileTask task = FileUtil.getFileTask(path);
+            task.startTime = System.currentTimeMillis();
             message.setFileName(task.fileName);
             message.setLength(task.length);
-            message.setMd5("");
+            message.setMd5(MD5Helper.getFileMD5(new File(task.filePath)));
             message.setFileSegmentSize(task.fileSegmentSize);
+            message.setPartNum(task.partNum);
             ioSession.setAttribute(MinaConstans.SESSION_ATTR_FILETASK, task);
             ioSession.write(message);
         }
 
         @Override
         public void sessionClosed(IoSession ioSession) throws Exception {
-            System.out.println("socket service 连接断开:" + String.valueOf(ioSession.getId()));
+            System.out.println("socket service 连接关闭:" + String.valueOf(ioSession.getId()));
         }
 
         @Override
         public void sessionDestroyed(IoSession ioSession) throws Exception {
-
+            System.out.println("socket service 连接销毁:" + String.valueOf(ioSession.getId()));
         }
     };
 
     public static void main(String[] args) {
-        MinaServer client = new MinaServer();
+        MinaServer client = new
+                MinaServer();
         new Thread(client).start();
     }
 }

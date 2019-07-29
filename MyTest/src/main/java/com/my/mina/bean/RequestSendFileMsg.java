@@ -8,6 +8,7 @@ public class RequestSendFileMsg implements Serializable {
     private long length;
     private int id;
     private int fileSegmentSize;
+    private int partNum;
 
     public String getFileName() {
         return fileName;
@@ -47,5 +48,13 @@ public class RequestSendFileMsg implements Serializable {
 
     public void setFileSegmentSize(int fileSegmentSize) {
         this.fileSegmentSize = fileSegmentSize;
+    }
+
+    public int getPartNum() {
+        return partNum;
+    }
+
+    public void setPartNum(int partNum) {
+        this.partNum = partNum;
     }
 }
