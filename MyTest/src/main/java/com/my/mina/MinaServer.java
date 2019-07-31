@@ -84,18 +84,7 @@ public class MinaServer implements Runnable {
         @Override
         public void sessionCreated(IoSession ioSession) throws Exception {
             // 文件发送请求
-            System.out.println("socket service 有一个连接:" + String.valueOf(ioSession.getId()));
-            String path = "E:\\Job\\AiGlasses.zip";
-            RequestSendFileMsg message = new RequestSendFileMsg();
-            FileTask task = FileUtil.getFileTask(path);
-            task.startTime = System.currentTimeMillis();
-            message.setFileName(task.fileName);
-            message.setLength(task.length);
-            message.setMd5(MD5Helper.getFileMD5(new File(task.filePath)));
-            message.setFileSegmentSize(task.fileSegmentSize);
-            message.setPartNum(task.partNum);
-            ioSession.setAttribute(MinaConstans.SESSION_ATTR_FILETASK, task);
-            ioSession.write(message);
+            sendFile(ioSession);
         }
 
         @Override
@@ -108,6 +97,25 @@ public class MinaServer implements Runnable {
             System.out.println("socket service 连接销毁:" + String.valueOf(ioSession.getId()));
         }
     };
+
+    /***
+     *  文件发送请求
+     * @param ioSession
+     */
+    private void sendFile(IoSession ioSession) {
+        System.out.println("socket service 有一个连接:" + String.valueOf(ioSession.getId()));
+        String path = "E:\\Job\\plugin";
+        RequestSendFileMsg message = new RequestSendFileMsg();
+        FileTask task = FileUtil.getFileTask(path);
+        task.startTime = System.currentTimeMillis();
+        message.setFileName(task.fileName);
+        message.setLength(task.length);
+        message.setMd5(MD5Helper.getFileMD5(new File(task.filePath)));
+        message.setFileSegmentSize(task.fileSegmentSize);
+        message.setPartNum(task.partNum);
+        ioSession.setAttribute(MinaConstans.SESSION_ATTR_FILETASK, task);
+        ioSession.write(message);
+    }
 
     public static void main(String[] args) {
         MinaServer client = new
