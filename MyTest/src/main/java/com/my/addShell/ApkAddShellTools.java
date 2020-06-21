@@ -20,12 +20,15 @@ public class ApkAddShellTools {
             byte[] unShellDexArray = readFileBytes(unShellDexFile);//以二进制形式读出dex
             int payloadLen = payloadArray.length;
             int unShellDexLen = unShellDexArray.length;
-            int totalLen = payloadLen + unShellDexLen + 4;//多出4字节是存放长度的。
-            byte[] newdex = new byte[totalLen]; // 申请了新的长度
+            int totalLen = payloadLen + unShellDexLen + 4;//多出4字节是存放长度的.
+            // 申请了新的长度x`
+            byte[] newdex = new byte[totalLen];
             //添加解壳代码
-            System.arraycopy(unShellDexArray, 0, newdex, 0, unShellDexLen);//先拷贝dex内容
+            //先拷贝dex内容
+            System.arraycopy(unShellDexArray, 0, newdex, 0, unShellDexLen);
             //添加加密后的解壳数据
-            System.arraycopy(payloadArray, 0, newdex, unShellDexLen, payloadLen);//再在dex内容后面拷贝apk的内容
+            //再在dex内容后面拷贝apk的内容
+            System.arraycopy(payloadArray, 0, newdex, unShellDexLen, payloadLen);
             //添加解壳数据长度
             System.arraycopy(intToByte(payloadLen), 0, newdex, totalLen - 4, 4);//最后4为长度
             //修改DEX file size文件头
