@@ -16,7 +16,7 @@ public class StringArithmeic {
     }
 
     /**
-     * 无重复字符的最长子串
+     * 无重复字符的最长子串(窗口滑动的实现方式)
      *
      * @param s
      * @return
