@@ -92,4 +92,9 @@ public class ListArithmeic {
             val = x;
         }
     }
+
+//    public int reverse(int x) {
+//        int a = Integer.valueOf(x).toHexString();
+//    }
+
 }

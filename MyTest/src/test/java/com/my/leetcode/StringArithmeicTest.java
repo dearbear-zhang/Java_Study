@@ -37,4 +37,9 @@ public class StringArithmeicTest extends TestCase {
     public void setUp() throws Exception {
         a = new StringArithmeic();
     }
+
+    public void testLongestCommonPrefix() {
+        String[] strs = new String[]{"low", "slxxxx", "flowr"};
+        System.out.println(a.longestCommonPrefix(strs));
+    }
 }
