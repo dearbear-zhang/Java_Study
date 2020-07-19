@@ -89,29 +89,45 @@ public class StringArithmeic {
         return res;
     }
 
+
     /**
-     * 动态规划的方式实现最大回文子串
-     *
-     * @param s
+     * @param s 动态规划的方式实现最大回文子串
      * @return
      */
     public String longestPalindromeEx(String s) {
         int length = s.length();
         boolean[][] dp = new boolean[length][length];
         char[] charArray = s.toCharArray();
-        int startIdx = 0, maxLength = 0;
+        int startIdx = 0, maxLength = 1;
         if (length == 0 || length == 1) {
             return s;
         }
-        for (int i = 0; i < length - 1; i++) {
-            for (int j = length - 1; j > i; j--) {
+        // l代表回文子串长度, l = j - i + 1,从1开始遍历
+        for (int l = 1; l <= length; l++) {
+            for (int i = 0; i <= length - l; i++) {
+                int j = i + l - 1;
+                if (l == 1) {
+                    // 长度为1时,都是回文子串
+                    dp[i][j] = true;
+                    continue;
+                }
+                if (l == 2) {
+                    // 长度为2时,判断两边元素是否相等
+                    dp[i][j] = charArray[i] == charArray[j];
+                    if (dp[i][j]) {
+                        maxLength = l;
+                        startIdx = i;
+                    }
+                    continue;
+                }
                 dp[i][j] = dp[i + 1][j - 1] && (charArray[i] == charArray[j]);
                 if (dp[i][j] && (j - i + 1 > maxLength)) {
+                    maxLength = j - i + 1;
                     startIdx = i;
                 }
             }
         }
-        return s.substring(startIdx, maxLength - 1);
+        return s.substring(startIdx, startIdx + maxLength);
     }
 
     /**
@@ -175,7 +191,7 @@ public class StringArithmeic {
      */
     public String longestCommonPrefix(String[] strs) {
         StringBuilder startString = new StringBuilder();
-        if (strs.length == 0){
+        if (strs.length == 0) {
             return "";
         }
         for (int i = 0; i < strs[0].length(); i++) {

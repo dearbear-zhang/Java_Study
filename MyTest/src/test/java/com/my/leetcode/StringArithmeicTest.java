@@ -26,7 +26,7 @@ public class StringArithmeicTest extends TestCase {
 
     public void testLongestPalindromeEx() {
         StringArithmeic a = new StringArithmeic();
-        System.out.println(a.longestPalindromeEx("dfasadg"));
+        System.out.println("最长回文子串:返回结果:" + a.longestPalindromeEx("abc"));
     }
 
 
