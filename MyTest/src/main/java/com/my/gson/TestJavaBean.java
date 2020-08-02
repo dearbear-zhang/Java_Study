@@ -1,8 +1,6 @@
 package com.my.gson;
 
-import java.io.Serializable;
-
-public class TestJavaBean implements Serializable {
+public class TestJavaBean {
     private String name;
     private String age;
     private String set;

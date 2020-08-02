@@ -1,5 +1,7 @@
 package com.my.leetcode;
 
+import java.util.Stack;
+
 public class ListArithmeic {
 
     /**
@@ -97,4 +99,59 @@ public class ListArithmeic {
 //        int a = Integer.valueOf(x).toHexString();
 //    }
 
+
+    /**
+     * 给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。
+     *
+     * 示例：
+     *
+     * 给定一个链表: 1->2->3->4->5, 和 n = 2.
+     *
+     * 当删除了倒数第二个节点后，链表变为 1->2->3->5.
+     * 说明：
+     *
+     * 给定的 n 保证是有效的。
+     *
+     * 进阶：
+     *
+     * 你能尝试使用一趟扫描实现吗？
+     *
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     */
+    /**
+     * Definition for singly-linked list.
+     * public class ListNode {
+     * int val;
+     * ListNode next;
+     * ListNode(int x) { val = x; }
+     * }
+     * <p>
+     * 该地方使用了栈的特性
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        Stack<ListNode> datas = new Stack<>();
+        ListNode item = head;
+
+        if (head == null) {
+            return null;
+        }
+        while (item != null) {
+            datas.add(item);
+            item = item.next;
+        }
+        ListNode itemPre;
+        while (n > 0) {
+            item = datas.pop();
+            n--;
+        }
+        if (item == head) {
+            return head.next;
+        } else {
+            itemPre = datas.peek();
+            itemPre.next = item.next;
+        }
+        return head;
+    }
 }
